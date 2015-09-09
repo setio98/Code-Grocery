@@ -1,0 +1,45 @@
+type
+  edge=record
+  re,next:longint
+end;
+var
+n,m,cnt,i,x,y:longint;
+f:array[0..10010] of longint;
+e:array[0..100050] of edge;
+vs:array[0..100050] of boolean;
+procedure add(x,y:longint);
+begin
+  inc(cnt);
+  with e[cnt] do
+  begin
+    re:=y;next:=f[x];
+  end;
+  f[x]:=cnt;
+end;
+  
+procedure dfs(x:longint);
+var tmp:longint;
+begin
+  tmp:=f[x];
+  while tmp<>0 do
+  begin
+    if not vs[tmp] then
+    begin
+    	vs[tmp]:=true;
+      dfs(e[tmp].re);
+      writeln(e[tmp].re);
+    end;
+    tmp:=e[tmp].next;
+  end;
+end;
+
+begin
+  readln(n,m);cnt:=1;
+  for i:=1 to m do
+  begin
+    readln(x,y);
+    add(x,y);add(y,x);
+  end;
+  dfs(1);
+  writeln(1);
+end.
